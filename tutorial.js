@@ -142,6 +142,8 @@ console.log(pk)
 //     }
 //   }
 
+// Don't worry about the details of the internals. In general, you are going to use the GraphQL interface described below. However, note that you have an instance of a class, and that the top-level structure looks a lot like the corresponding GraphQL structure. (This rapidly ceases to be the case for finer-grained content.)
+
 // `pk` has a processerId and two default selectors (being `lang` for language and `abbr` for the abbreviation).
 // The selectors specify the docSets that are part of Proskomma, and not the actual documents.
 
@@ -162,6 +164,7 @@ const pkDoc = pk.importDocument(
 // but for this tutorial we'll simply work with a string as input.
 
 // The `importDocument` has additional arguments we do not use right now (options, customTags, emptyBlocks, tags)
+// The options argument in particular is useful for filtering out markup as part of the import process (eg to remove alignment data when it is not needed).
 
 // Now we have imported a document in Proskomma, let's look at `pk` again:
 
@@ -589,7 +592,7 @@ queryPk(`
 // This is, finally, the way to retrieve the actual Biblical text we imported at the start of the 
 // tutorial. 
 
-// The mainSequence contains everything, but for footnotes, for instance, these are just pointers 
+// The mainSequence contains everything, but for footnotes, for instance, these are just references 
 // to the actual footnotes
 
 queryPk(`
@@ -646,11 +649,11 @@ queryPk(`
 // Now lets add two extra fields that show the potential of having both the text and all its
 // related information in a single query interface.
 
-// For each block we will retrieve two extra things: 1) its scope, and 2) its grafts. 
+// For each block we will retrieve two extra things: 1) its block scope, and 2) its grafts. 
 
-// Its scope is a way to retrieve where the block was found. In simple terms, scopes tell you where you are
+// Its block scope is a way to retrieve where the block was found. In simple terms, scopes tell you where you are
 // It is shortened as `bs` for blockScope.
-// The last item in the following query gives us the following bs; the scope tells us what type of paragraph we're in.
+// The last item in the following query gives us the following bs; the block scope tells us what type of paragraph we're in.
 // Alternative bs's could also be elements to indicate poetic language such as `\q1`.
 
 queryPk(`
@@ -677,7 +680,7 @@ queryPk(`
 //   "bg": []
 // }
 
-// The payload is an abstract concept that fits both scopes and grafts. 
+// The payload is something like "the main content". For tokens, it's a fragment of text. For scopes, it's the description of that scope, while for grafts it's the id of the destination sequence.
 
 // A graft is another sequence that is inserted at a specific point in the given block. Footnotes, for instance, 
 // are grafts. But certain headings could also be seen as grafts.
@@ -722,6 +725,8 @@ queryPk(`
 // We can learn multiple things from this result. Firstly, the result is not a single verse, but rather a full block paragraph. Secondly,
 // the scope of this block is that of a `blockTag/p` meaning it is a paragraph indeed. Thirdly, it contains a block graft, 
 // which in this case is a title. 
+
+// (It is also possible to structure the GraphQL output by chapter, by chapter/verse and according to particular markup such as the \ts milestone.)
 
 // There are two types of grafts in Proskomma: the block graft and the inline graft. The block graft is essentially a block that 
 // is inserted before the block it is attached to: for instance, the title is a block graft. It is a way of saying 'insert this content here' where
