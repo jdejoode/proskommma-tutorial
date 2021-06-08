@@ -725,9 +725,12 @@ queryPk(`
 // inline graft as a `span` in html. Footnotes are inline grafts, for instance.
 
 // We now have a lot of information and a hierarchy contains: docSets -> documents -> sequences -> blocks -> grafts and scopes
-// There is one final thing we need to understand before ending this tutorial: 
 
-// A text is parsed into words, punctuation, or whitespace. These elements can be accessed as well using the tokens field. 
+// There is one final thing we need to understand before ending this tutorial: a text is parsed into a smaller series of `items`. 
+// Almost everything is an item, including the words, punctuation, and whitespace (later these three are referred to as tokens), but 
+// also milestones, tags, and attributes. When you want to get access to these, there are two often used fields: tokens and items.
+
+// As a text is parsed into words, punctuation, or whitespace, these elements can be accessed using the tokens field. 
 
 // Let's use the tokens field to get the actual tokens of the first block of the main sequence
 
@@ -794,7 +797,7 @@ queryPk(`
 // is parsed into wordLike, lineSpace, and punctuation tokens. 
 
 // If you want to get not only the tokens, but also the grafts and their scopes, use `items` rather than
-// `tokens`. Items get you all scopes, grafts, or a tokens.
+// `tokens`. Items get you even more information.
 
 queryPk(`
 { docSets
