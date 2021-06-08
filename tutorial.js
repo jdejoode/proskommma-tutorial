@@ -715,15 +715,19 @@ queryPk(`
 //   ]
 // },
 
-// We can learn multiple things from this results. Firstly, the result is not a single verse, but rather a full block paragraph. Secondly,
-// the scope of this block is that of a `blockTag/p` meaning it is a paragraph indeed. Thirdly, it contains a graft, which in this case is a title. 
+// We can learn multiple things from this result. Firstly, the result is not a single verse, but rather a full block paragraph. Secondly,
+// the scope of this block is that of a `blockTag/p` meaning it is a paragraph indeed. Thirdly, it contains a block graft, 
+// which in this case is a title. 
 
-// The graft can precede of follow the block.
+// There are two types of grafts in Proskomma: the block graft and the inline graft. The block graft is essentially a block that 
+// is inserted before the block it is attached to: for instance, the title is a block graft. It is a way of saying 'insert this content here' where
+// the content is a block in its own right. The inline graft is inserted at a given place *within* a block. One could think of the 
+// inline graft as a `span` in html. Footnotes are inline grafts, for instance.
 
 // We now have a lot of information and a hierarchy contains: docSets -> documents -> sequences -> blocks -> grafts and scopes
 // There is one final thing we need to understand before ending this tutorial: 
 
-// A text is parsed into words, punctuation, or whitespace. These elements can be accessed as well. 
+// A text is parsed into words, punctuation, or whitespace. These elements can be accessed as well using the tokens field. 
 
 // Let's use the tokens field to get the actual tokens of the first block of the main sequence
 
