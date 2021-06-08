@@ -154,6 +154,10 @@ console.log(pk)
 //   }
 
 // `pk` has a processerId and two default selectors (being `lang` for language and `abbr` for the abbreviation).
+// The selectors specify the docSets that are part of Proskomma, and not the actual documents.
+
+// Often a docSets is a version of the Bible, and the documents are the books of said Bible.
+
 // This instance of Proskomma (`pk`) does not contain any document set so far, so let
 // us read the above sample and store it as a document.
 
@@ -165,8 +169,8 @@ const pkDoc = pk.importDocument(
         content=sample,                         // we feed it the actual content, in this the `sample` defined above
       );
 
-// Again, in practice, most of the time we would be reading the content from a file, but for this tutorial
-// we'll simply work with a string as input.
+// Again, in practice, most of the time we would be reading the content from a file on the filesystem or the content of an http request, 
+// but for this tutorial we'll simply work with a string as input.
 
 // The `importDocument` has additional arguments we do not use right now (options, customTags, emptyBlocks, tags)
 
@@ -409,8 +413,12 @@ queryPk('{ docSets { id } }')
 
 // {"data":{"docSets":[{"id":"eng_ult"}]}}
 
-// Let's go through a series of queries that are intended to show how to get data out of Proskomma. We'll start with the simplest possible query:
+// Let's go through a series of queries that are intended to show how to get data out of Proskomma. We'll start with the simplest possible query.
+
 queryPk('{ id }')
+
+// This query is only for debugging purposes. It returns a unique id for your Proskomma instance, 
+// for instance, in case you have multiple instances of Proskomma running. 
 
 // Space separate multiple fields if you want to retrieve multiple ones
 queryPk('{ processor packageVersion }')
