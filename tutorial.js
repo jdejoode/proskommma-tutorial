@@ -355,6 +355,8 @@ console.log(pkDoc);
 //     toc3: 'Gen'
 //   }
 
+// The title of a document is a special case, because it is parsed separately into a title sequence.
+
 // Finally, we can see a list of sequences. We have removed the list of sequences above,
 // but the basic idea is quickly clear: besides the main sequence, we also have 
 // a title sequence, a heading sequence, and a footnote sequence, for instance.
@@ -466,7 +468,7 @@ queryPk(`
     } 
   }`)
 
-// You can also get multiple parts of the header, in this case you need rename the field (give it an alias)
+// You can also get multiple headers, in this case you need rename the field (give it an alias)
 // by adding a `alias:` before the name of the field. You are free to choose any name you like for your aliases.
 // For instance, the `title` and `shortName` aliases below can easily be changed.
 queryPk(`
@@ -552,10 +554,9 @@ queryPk(`
 }
 `)
 
-// Note that sequences other than the main sequences do not form a single sequence.
-// For instance, say we have a sequence for a footnote, but we have multiple footnotes.
-// These multiple footnotes do not form a single sequence, but rather each footnote will
-// be its own sequence. In fact, each sequence can be as complex as needed, meaning it is 
+// There is only one mainSequence that contains the entire main text of a document.
+// Other sequences, such as footnotes, form distinct sequences. Each footnote is its own sequence.
+// In fact, each sequence can be as complex as needed, meaning it is 
 // it's a tree in its own right. That means that it can contains its own complexity. 
 
 // The next level in the tree are blocks
@@ -646,8 +647,8 @@ queryPk(`
 
 // Its scope is a way to retrieve where the block was found. In simple terms, scopes tell you where you are
 // It is shortened as `bs` for blockScope.
-// The last item in the following query gives us the following bs, which indicates the scope of the block 
-// is that of a paragraph. Alternative bs's could also be elements to indicate poetic language such as `\q1`.
+// The last item in the following query gives us the following bs; the scope tells us what type of paragraph we're in.
+// Alternative bs's could also be elements to indicate poetic language such as `\q1`.
 
 queryPk(`
 { docSets
@@ -732,7 +733,8 @@ queryPk(`
 
 // As a text is parsed into words, punctuation, or whitespace, these elements can be accessed using the tokens field. 
 
-// Let's use the tokens field to get the actual tokens of the first block of the main sequence
+// Let's use the tokens field to get the actual tokens of the first block of the main sequence using the positions field. 
+// The positions field takes an array as input, but you can also specificy you only want the first element.
 
 queryPk(`
 { docSets
