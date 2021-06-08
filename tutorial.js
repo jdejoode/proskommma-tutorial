@@ -5,12 +5,15 @@
 // It is not the aim of this tutorial to provide a comprehensive overview of the ways in which Proskomma
 // reads, parses, stores, represents, and edits texts that after importing USFM or USX formats. Rather the 
 // aim is to show how you can query. To fully understand how Proskomma querying works, it will be necessary to 
-// explain some of the internals of Proskomma.
+// explain the basics of the Proskomma data model.
 
 // In this tutorial you will create a javascript script called `tutorial.js` that we will gradually fill 
 // with commands that are meaningful. 
 
-// We will be running this file using `node tutorial.js`
+// We will be running this file using `node tutorial.js. 
+
+// This tutorial assumes that you have successfully installed Proskommma. If you have not, you could still run
+// `npm init` and `npm install proskomma`
 
 // Let's start by creating an empty file called `tutorial.js`
 
@@ -219,9 +222,12 @@ console.log(pk);
 // and a docSet. The docSet is identified using the selectors we provided
 // as we were reading the document as `eng_ult` 
 
-// docSets are combinations of documents. You can have multiple docSets in a Proskomma instance.
+// The pk object also has a number of methods that could be helpful when you
+// need to access, for instance, the number of documents. The main way of interacting 
+// with Proskomma, however, is not so much by handling the pk object itself, but rather
+// by using the query interface that we will introduce later in this tutorial.
 
-// EXPAND: Add another document, remove said document, etc.
+// docSets are combinations of documents. You can have multiple docSets in a Proskomma instance.
 
 console.log('Here is more information on the document we read:')
 console.log(pkDoc);
@@ -405,6 +411,9 @@ queryPk('{ id }')
 
 // This query is only for debugging purposes. It returns a unique id for your Proskomma instance, 
 // for instance, in case you have multiple instances of Proskomma running. 
+
+// GraphQL looks the way it does because FB borrowed an existing mechanism from Javascript - see 'Nested object and array destructuring': https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#object_destructuring
+// That is in essence what is happining with the query `{ id }`.
 
 // Space separate multiple fields if you want to retrieve multiple ones
 queryPk('{ processor packageVersion }')
